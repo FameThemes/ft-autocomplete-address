@@ -88,7 +88,7 @@ jQuery( document ).ready( function( $ ){
 
                 var data = {};
                 $.each( GConfig, function( key, name_Type ){
-                    data[ key ] = null;
+                    data[ key ] = '';
                 });
                 // Get data From MAP
                 if ( place.address_components.length ) {
@@ -100,21 +100,22 @@ jQuery( document ).ready( function( $ ){
                         }
                     }
                 }
-                console.log( 'Pleace', place );
-                console.log( 'V', data );
 
+                console.log( data );
 
                 $.each( config.fills, function( key, selector ){
                     var el = $( selector );
-                    if ( el.prop("tagName") === 'SELECT' ) {
-                        $( 'option', el ).removeAttr( 'selected' );
-                    } else {
-                        el.val( '' );
+                    if ( key !== 'address' ) {
+                        if ( el.prop("tagName") === 'SELECT' ) {
+                            $( 'option', el ).removeAttr( 'selected' );
+                        } else {
+                            el.val( '' );
+                        }
                     }
 
                     switch ( key ) {
                         case 'address':
-                            if ( data.street_number && data.route ) {
+                            if ( data.street_number !== '' && data.route !== '' ) {
                                 el.val( data.street_number +' ' +data.route );
                             }
                             break;
